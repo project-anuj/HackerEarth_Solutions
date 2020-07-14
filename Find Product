@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+typedef long ll;
+#define REP(i,n) for(int i=0;i<n;i++)
+int main()
+
+{
+
+    int i,a[1000],n;
+
+    ll answer=1;
+
+    cin>>n;
+
+    REP(i,n)
+
+    cin>>a[i];
+
+    REP(i,n)
+
+    {
+
+    answer=(answer*a[i])%(1000000007);
+
+    }
+
+    cout<<answer;
+
+    return 0;
+
+}
