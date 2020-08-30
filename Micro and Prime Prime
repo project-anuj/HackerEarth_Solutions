@@ -1,0 +1,46 @@
+.....................seive and cumulative sum.....................................
+
+#include<bits/stdc++.h>
+using namespace std;
+bool a[1000001];
+vector<int> prime_prime;
+void seive()
+{
+	a[0]=a[1]=true;
+	for(int i=2;i*i<=1000000;i++)
+	{
+		if(a[i]==false)
+		{
+			for(int j=i*i;j<=1000000;j+=i)
+			{
+				a[j]=true;
+			}
+		}
+	}
+	int count=0;
+	for(int i=0;i<=1000000;i++)
+	{	
+		if(a[i]==false)
+		count++;
+		if(a[count]==false)
+		prime_prime.push_back(1);
+		else
+		prime_prime.push_back(0);
+	}
+	for(int i=1;i<=1000000;i++)
+	{
+        prime_prime[i]+=prime_prime[i-1];
+	}
+}
+int main()
+{
+	int t;
+	cin>>t;
+	seive();
+	while(t--)
+	{
+		int l,r;
+		cin>>l>>r;
+		cout<<prime_prime[r]-prime_prime[l-1]<<endl;
+	}
+}
