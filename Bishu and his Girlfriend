@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> v[100001];
+int visited[100001];
+int dis[100001];
+void dfs(int node,int d)
+{
+	visited[node]=1;
+	dis[node]=d;
+	for(auto x: v[node])
+	{
+		if(visited[x]==0)
+		dfs(x,d+1);
+	}
+}
+int main()
+{
+	int n;
+	cin>>n;
+	for(int i=1;i<n;i++)
+	{
+		int a,b;
+		cin>>a>>b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+	dfs(1,0);
+	int mn=INT_MAX,j,q;
+	cin>>q;
+    vector<int> v;
+	for(int i=1;i<=q;i++)
+	{
+		int a;
+		cin>>a;
+        v.push_back(a);
+		if(dis[a]<mn && dis[a]!=0)
+		mn=dis[a];
+	}
+    sort(v.begin(),v.end());
+    for(auto x: v)
+    if(dis[x]==mn)
+	{
+        cout<<x<<endl;
+        break;
+    }
+}
