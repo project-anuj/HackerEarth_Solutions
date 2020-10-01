@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+#define MAX 100
+#define REP(i,n) for(int i=0;i<n;i++)
+#define REP1(i,n) for(int i=1;i<=n;i++)
+#define rREP(i,n) for(int i=n-1;i>=0;i--)
+#define rREP1(i,n) for(int i=n;i>=1;i--)
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+typedef queue<ii> qii;
+typedef queue<int> qi;
+typedef long long ll;
+vi ar[1000001];
+int visited[1000001];
+int cc[1000001];
+int curr_cc;
+
+void dfs(int a)
+{
+	visited[a]=1;
+	cc[a]=curr_cc;
+	for(auto x:ar[a])
+	{
+		if(visited[x]==0)
+		{	
+			dfs(x);
+		}
+	}
+}
+int main()
+{	
+	ios_base::sync_with_stdio(false);    cin.tie(NULL);
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n,k;
+		cin>>n>>k;
+		vii edgeToExplore;
+		bool flag=true;
+		curr_cc=0;
+		for(int i=1;i<=n;i++)
+		ar[i].clear(),visited[i]=0;
+		for(int i=1;i<=k;i++)
+		{
+			int a,b;
+			string r;
+			cin>>a>>r>>b;
+			if(r=="=")
+			{	
+				ar[a].push_back(b);
+				ar[b].push_back(a);
+			}
+			else
+			{
+				edgeToExplore.push_back({a,b});
+			}
+		}
+		for(int i=1;i<=n;i++)
+		{
+			if(visited[i]==0)
+			{	curr_cc++;
+				dfs(i);
+			}
+		}
+		for(int i=0;i<edgeToExplore.size();i++)
+		{
+			if(cc[edgeToExplore[i].first]==cc[edgeToExplore[i].second])
+			{	
+				flag=false;
+				break;
+			}
+		}
+		if(flag==true)
+		cout<<"YES"<<endl;
+		else
+		cout<<"NO"<<endl;
+	}
+}
