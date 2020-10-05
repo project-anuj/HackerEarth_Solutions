@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+#define MAX 100
+#define REP(i,n) for(int i=0;i<n;i++)
+#define REP1(i,n) for(int i=1;i<=n;i++)
+#define rREP(i,n) for(int i=n-1;i>=0;i--)
+#define rREP1(i,n) for(int i=n;i>=1;i--)
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+typedef queue<ii> qii;
+typedef queue<int> qi;
+typedef long long ll;
+vi ar[100001];
+int visited[100001];
+
+void dfs(int node)
+{
+	visited[node]=1;
+	for(auto child: ar[node])
+	{
+		if(visited[child]==0)
+		dfs(child);
+	}
+}
+int main()
+{
+	int n,m,k,a,b;
+	cin>>n>>m>>k;
+	
+	REP(i,m)
+	{
+		cin>>a>>b;
+        ar[a].push_back(b);
+        ar[b].push_back(a);
+	}
+	int cc=0;
+	for(int i=1;i<=n;i++)
+	{
+		if(visited[i]==0)
+		{
+			dfs(i);
+			cc++;
+		}
+	}
+	if(cc>k)
+	cout<<-1<<endl;
+	else
+	cout<<m-n+k<<endl;
+}
