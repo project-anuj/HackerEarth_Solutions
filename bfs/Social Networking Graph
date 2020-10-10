@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace  std;
+
+vector<int> ar[100001];
+int visited[100001];
+int dis[100001];
+int level[100001];
+
+void bfs(int node)
+{
+    queue<int> q;
+    q.push(node);
+    visited[node]=1;
+    dis[node]=0;
+    while(q.size()>0)
+    {
+        int x=q.front();
+        q.pop();
+        for(auto child:ar[x])
+        {
+            if(visited[child]==0)
+            {
+                q.push(child);
+                visited[child]=1;
+                dis[child]=dis[x]+1;
+                level[dis[child]]++;
+            }
+        }
+    }
+}
+int main()
+{
+    int  n,e;
+    cin>>n>>e;
+    for(int i=0;i<e;i++)
+    {
+        int a,b;
+        cin>>a>>b;
+        ar[a].push_back(b);
+        ar[b].push_back(a);
+    }
+    int m;
+    cin>>m;
+    for(int i=0;i<m;i++)
+    {
+        int src,t;
+        cin>>src>>t;
+        bfs(src);
+        cout<<level[t]<<endl;
+        for(int j=0;j<100001;j++)
+        {
+            visited[j]=0;
+            dis[j]=0;
+            level[j]=0;
+        }
+    }
+}
